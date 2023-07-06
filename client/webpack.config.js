@@ -17,27 +17,33 @@ module.exports = () => {
       filename: "[name].bundle.js",
       path: path.resolve(__dirname, "dist"),
     },
+    
     plugins: [
       new HtmlWebpackPlugin({
         template: "./index.html",
       }),
+
+      new InjectManifest({
+        swSrc: "./src-sw.js",
+        swDest: "src-sw.js",
+      }),
+
       new WebpackPwaManifest({
+        fingerprints: false,
+        inject: true,
         name: "Text Editor",
         short_name: "Text Editor",
         description: "Edit your text",
-        start_url: "/",
+        start_url: "./",
         publicPath: "./",
         background_color: "#ffffff",
         icons: [
           {
             src: path.resolve("src/images/logo.png"),
             sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join("assets", "icons"),
           },
         ],
-      }),
-      new InjectManifest({
-        swSrc: "./src-sw.js",
-        swDest: "./src-sw.js",
       }),
     ],
     module: {
@@ -53,6 +59,10 @@ module.exports = () => {
             loader: "babel-loader",
             options: {
               presets: ["@babel/preset-env"],
+              plugins: [
+                "@babel/plugin-proposal-object-rest-spread",
+                "@babel/transform-runtime",
+              ],
             },
           },
         },
