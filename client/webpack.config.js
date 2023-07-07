@@ -31,9 +31,9 @@ module.exports = () => {
       new WebpackPwaManifest({
         fingerprints: false,
         inject: true,
-        name: "Text Editor",
+        name: "Just Another Text Editor",
         short_name: "Text Editor",
-        description: "Edit your text",
+        description: "Create text snippets that are saved for later use, while online and offline",
         start_url: "./",
         publicPath: "./",
         background_color: "#ffffff",
